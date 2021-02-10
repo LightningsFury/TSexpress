@@ -1,8 +1,9 @@
-import http from "http";
-import express from "express";
 import bodyParser from "body-parser";
-import env from "./Env";
+import express from "express";
+import http from "http";
 import config from "./config.json";
+import env from "./Env";
+import passwordAuth from "./routers/passwordAuth";
 /**
  * Server class to instantiate a http server with express routing
  */
@@ -42,6 +43,7 @@ class Server {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
 
+    this.app.post("/post", passwordAuth);
     this.app.post("/post", (req, res) => {
       console.log(req.body);
       res.status(200).json({ message: "pong!!!" });
